@@ -13,6 +13,8 @@ class DataStore {
     
     static let sharedInstance = DataStore()
     
+    var messages = [Message] ()
+    
     private init() {}
     
     // MARK: - Core Data stack
@@ -24,7 +26,7 @@ class DataStore {
          application to it. This property is optional since there are legitimate
          error conditions that could cause the creation of the store to fail.
          */
-        let container = NSPersistentContainer(name: "SlapChat")
+        let container = NSPersistentContainer(name: "slapChat")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
                 // Replace this implementation with code to handle the error appropriately.
@@ -58,6 +60,25 @@ class DataStore {
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
         }
+    }
+    
+    func fetchData() {
+        let managedContext = persistentContainer.viewContext
+        let request = NSFetchRequest<Message>(entityName: "Message")
+        
+        do { let data = try managedContext.fetch(request)
+            messages = data
+            let sortedMessages = messages.sorted(by: { (message1, message2) -> Bool in
+                
+                return message1.createdAt.compare(message2.createdAt as Date) == .orderedDescending
+                
+            })
+            messages = sortedMessages
+        } catch {
+            print("error")
+        }
+        
+       
     }
     
 }

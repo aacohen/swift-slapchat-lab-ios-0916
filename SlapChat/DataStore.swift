@@ -65,10 +65,19 @@ class DataStore {
     func fetchData() {
         let managedContext = persistentContainer.viewContext
         let request = NSFetchRequest<Message>(entityName: "Message")
+//       alternate way to do fetch request: 
+//       let fetchTwo: NSFetchRequest<Message> = Message.fetchRequest()
         
         do { let data = try managedContext.fetch(request)
             messages = data
             let sortedMessages = messages.sorted(by: { (message1, message2) -> Bool in
+                
+//                another way to do this: force casting as Date allows you to not use .compare AND takes away the optional but if messageA.createdAt is nil then it will crash when forcing as Date
+                
+//                var dateA = messageA.createdAt as! Date
+//                var dateB = messageB.createdAt as! Date
+//                
+//                return dateA > dateB
                 
                 return message1.createdAt.compare(message2.createdAt as Date) == .orderedDescending
                 

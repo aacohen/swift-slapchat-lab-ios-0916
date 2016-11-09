@@ -49,11 +49,14 @@ class TableViewController: UITableViewController {
 //        
 //        newMessage1.content = "This is Message Number 1"
 //        newMessage1.createdAt = NSDate()
+    
+//   another way to create a message in one line:  var message2 = Message(context: store.persistantContainer.viewContext)
+    
 //        let newMessage2 = NSEntityDescription.insertNewObject(forEntityName: "Message", into: store.persistentContainer.viewContext) as! Message
 //        newMessage2.content = "This is Message number 2"
 //        newMessage2.createdAt = NSDate()
 // print()
-//        store.saveContext()
+//        store.saveContext()    // can also do managedcontext.save()
 //        store.fetchData()
 //        tableView.reloadData()
 //    }
